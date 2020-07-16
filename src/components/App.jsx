@@ -13,6 +13,13 @@ class App extends React.Component {
       currentVideo: exampleVideoData[0]
     };
   }
+  // when the title of a VideoListEntry is clicked, that video is displayed in the player.
+  onVideoListEntryTitleClick(newCurrentVideo) {
+    this.setState({
+      currentVideo: newCurrentVideo
+    });
+  }
+
   render() {
     return (
       <div>
@@ -26,7 +33,7 @@ class App extends React.Component {
             <VideoPlayer video={this.state.currentVideo}/>
           </div>
           <div className="col-md-5">
-            <VideoList videos={this.state.allVideos}/>
+            <VideoList videos={this.state.allVideos} onClick={this.onVideoListEntryTitleClick.bind(this)}/>
           </div>
         </div>
       </div>
