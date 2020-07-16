@@ -1,8 +1,9 @@
 import VideoListEntry from './VideoListEntry.js';
 
-var VideoList = () => (
+// Dynamically render one VideoListEntry component for each video object in exampleVideoData
+var VideoList = (props) => (
   <div className="video-list">
-    <VideoListEntry />
+    {props.videos.map(videoObj => <VideoListEntry video={videoObj}/>)}
   </div>
 );
 
