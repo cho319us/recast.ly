@@ -13,10 +13,33 @@ class App extends React.Component {
       currentVideo: exampleVideoData[0]
     };
   }
+
+  // invoked immediately after a component is rendered to the DOM or is mounted
+  componentDidMount() {
+    // should load live data when app is initialized
+    this.getSearchVideos('Music'); // set 'Music' as the default search string
+  }
+
   // when the title of a VideoListEntry is clicked, that video is displayed in the player.
   onVideoListEntryTitleClick(newCurrentVideo) {
     this.setState({
       currentVideo: newCurrentVideo
+    });
+  }
+
+  // when the user searched for a string, a list of string related videos is showed in video list and first video is displayed in the player
+  getSearchVideos(string) {
+    // defined a option to pass to the API helper function
+    var option = {
+      key: this.props.youtubeAPIKey,
+      query: string
+    };
+    // call the API helper function send get request to the server
+    this.props.searchYouTube(option, (videos) => {
+      this.setState({
+        allVideos: videos,
+        currentVideo: videos[0]
+      });
     });
   }
 
@@ -25,7 +48,7 @@ class App extends React.Component {
       <div>
         <nav className="navbar">
           <div className="col-md-6 offset-md-3">
-            <Search />
+            <Search getSearchVideos={this.getSearchVideos.bind(this)}/>
           </div>
         </nav>
         <div className="row">
